@@ -184,10 +184,10 @@ function validacion(){
     //Y en el ultimo sweet alert devolvemos el valor total de la pizza desglosando sus apartados
    
     swal({
-        title:"La pizza pedida es: \n"
-         + "Tamaño : "+ tam.toUpperCase() + " " + preciotamaño + " euros",
-        text: "Has añadido : \n"+ 
-        precioingredientes + " ingredientes: " + precioingredientes + "euros.",
+        title:"Has pedido una pizza \n"
+         + tam.toUpperCase() + " su precio es de " + preciotamaño + " euros",
+        text: "Has añadido \n"+ 
+        precioingredientes + " ingredientes: " + precioingredientes + " euros.",
         
         type: 'info',
        
@@ -199,10 +199,10 @@ function validacion(){
             swal(
 
                 {
-                    title              : "El precio total de la pizza es: \n" + 
-                    "TAMAÑO: "+ preciotamaño+ "EUROS\n" +
-                    "INGREDIENTES: " + precioingredientes + "EUROS\n"+
-                    "TOTAL: " +(preciotamaño+precioingredientes) + " EUROS.",
+                    title              : "El precio total de la pizza son: \n" + 
+                    "TAMAÑO: "+ preciotamaño+ " euros\n" +
+                    "INGREDIENTES: " + precioingredientes + " euros\n"+
+                    "TOTAL: " +(preciotamaño+precioingredientes) + " euros",
                     text               : "¿Deseas hacer el pedido?",
                     type               : "success",
                     allowEscapeKey     : false,
