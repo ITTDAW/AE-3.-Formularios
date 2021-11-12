@@ -4,10 +4,12 @@
 cargadas al momento de lanzarse este evento. */
 
 window.onload= function(){
-    //Cuando pulsemos el boton submit del formulario , activamos la funcion de validacion que tenemos descrita debajo.
+    //Cuando pulsemos el input button del formulario , activamos la funcion de validacion que tenemos descrita debajo.
     //Si todos en todos los campos que validamos no obtenemos un ningun false, la validacion sera correcta. Si obtenemos algun
     //false, mostraremos un alert y no podremos enviar los datos del formulario
-    formulario.onsubmit =validacion;
+    //Hemos utilizado un boton y no un submit para poder utilizar los sweet alert. De esta manera, el submit se realiza
+    //cuando pulsamos el boton ok en el ultimo sweet alert de nuestro pedido.
+    procesar.onclick =validacion;
     
     
 }
@@ -21,7 +23,12 @@ function validacion(){
     a continuacion quitando los espacios en blanco, estan vacios mostraremos el alert y devolveremos el false en la funcion */
     if (nombre.value.trim() == "" || telefono.value.trim()=="" || direccion.value.trim()=="" || email.value.trim()=="") {
         // Si no se cumple la condicion...
-        alert('Los campos nombre, teléfono, dirección y email deben de estar cubiertos');
+        swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Los campos Nombre, Direccion, Telefono y Email deben de estar cubiertos',
+            footer: '<a href="">Rellena todos los campos para hacer un pedido</a>'
+          })
        
         return false;
     }
@@ -35,7 +42,12 @@ function validacion(){
      establecida. Nosotros mediante el condicional if, le decimos que si no existe la ocurrencia de que nuestra palabra empiece por
      mayuscula, enviamos un alert y devolvemos false en la funcion*/
      if (!nombre.value.match(primeramayuscula)){
-      alert("El nombre debe de empezar por mayusculas")
+        swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'El nombre debe de tener la primera letra Mayúscula',
+            footer: '<a href="">Escribe la primera letra mayúscula en el nombre</a>'
+          })
           return false;
       }
 
@@ -47,7 +59,12 @@ function validacion(){
       /*El metodo match nos devuele las ocurrencias que haya dentro de la cadena si cumple con nuestra expresion regular, con nuestro 
       condicional if, comprobamos si es falsa esta ocurrencia, pues devolvemos el alert correspondiente y retornamos false en la funcion */
     if (!telefono.value.match(tel)){
-         alert("El campo teléfono es numerico, 9 números");
+        swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'El teléfono puede ser movil o fijo, pero ha de tener 9 digitos',
+            footer: '<a href="">9 digitos en tu telefono</a>'
+          })
          return false;
      }
 
@@ -61,7 +78,12 @@ function validacion(){
     /*Volvemos a analizar con el condicional if y el metodo match si se produce la ocurrencia de nuestra expresion regular */
     if (!email.value.match(correo)){
         /*Si no se produce devolvemos el alert y el false */
-        alert("El campo de email debe de llevar una @ y un .");
+        swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'El campo email debe de tener un formato correcto',
+            footer: '<a href="">Pon un correo electronico correcto</a>'
+          })
        return false;
     }
 
@@ -92,7 +114,12 @@ function validacion(){
     }
     //Si hemos salido del bucle y la variable check no esta a true, devolvemos un alert y enviamos un false.
     if(check==false){
-        alert("Debes de seleccionar un tamaño de pizza");
+        swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Debes de seleccionar un tamaño de la pizza',
+            footer: '<a href="">Escoge un tamaño de pizza</a>'
+          })
         return false;
     //SI HEMOS ESCOGIDO UN TAMAÑO, LE ESTABLECEMOS EN UNA VARIABLE SU PRECIO.
     /*Si por el contrario check esta a true, mediante el valor de nuestra i, que nos dice cual de nuestros radios esta check , analizamos
@@ -121,7 +148,12 @@ function validacion(){
     //Con checked obligamos a que algun ingrediente se encuentre seleccionado
     if(mozzarella.checked==false && piña.checked==false && bacon.checked==false && anchoas.checked==false && trufa.checked==false && berenjena.checked==false){
         //Si no hay ninguno seleccionado, devolvemos un alert y un false.
-        alert("Debes seleccionar al menos un ingrediente");
+        swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Selecciona al menos un ingrediente en la pizza',
+            footer: '<a href="">Escoge al menos un ingrediente</a>'
+          })
         return false;
 
     }
@@ -129,8 +161,8 @@ function validacion(){
     //SI TODAS LAS VALIDACIONES NO DEVUELVEN NINGUN FALSE, PODEMOS CALCULAR EL PRECIO DE NUESTRA PIZZA
 
     //Primero mostramos un alert con el tamaño de la pizza pedida y el precio que supone ese tamaño, tenemos los valores en las variables que hemos guardado
-    swal("La pizza pedida es: \n"
-    + "Tamaño : "+ tam.toUpperCase() + " " + preciotamaño + " euros" );
+    // swal("La pizza pedida es: \n"
+    // + "Tamaño : "+ tam.toUpperCase() + " " + preciotamaño + " euros" );
 
     /*Despues para saber cuantos ingredientes hemos seleccionado, seleccionamos nuestro grupo checkbox con el name que le establecimos
     en el html y lo recorremos con un bucle for */
@@ -146,18 +178,68 @@ function validacion(){
     }
 
     //Con el siguiente alert mostramos el numero total de ingredientes que hemos seleccionado y el precio de los mismos
-    swal("Has añadido :\n"+ 
-    precioingredientes + " ingredientes: " + precioingredientes + "euros.")
+    // swal("Has añadido :\n"+ 
+    // precioingredientes + " ingredientes: " + precioingredientes + "euros.")
 
-    //Y en el ultimo alert devolvemos el valor total de la pizza desglosando sus apartados
-    swal("El precio total de la pizza es: \n" + 
-            "TAMAÑO: "+ preciotamaño+ "EUROS\n" +
-            "INGREDIENTES: " + precioingredientes + "EUROS\n"+
-            "TOTAL: " +(preciotamaño+precioingredientes) + " EUROS.")
+    //Y en el ultimo sweet alert devolvemos el valor total de la pizza desglosando sus apartados
+   
+    swal({
+        title:"La pizza pedida es: \n"
+         + "Tamaño : "+ tam.toUpperCase() + " " + preciotamaño + " euros",
+        text: "Has añadido : \n"+ 
+        precioingredientes + " ingredientes: " + precioingredientes + "euros.",
+        
+        type: 'info',
+       
+        confirmButtonColor: '#3085d6',
+       
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        
+            swal(
+
+                {
+                    title              : "El precio total de la pizza es: \n" + 
+                    "TAMAÑO: "+ preciotamaño+ "EUROS\n" +
+                    "INGREDIENTES: " + precioingredientes + "EUROS\n"+
+                    "TOTAL: " +(preciotamaño+precioingredientes) + " EUROS.",
+                    text               : "¿Deseas hacer el pedido?",
+                    type               : "success",
+                    allowEscapeKey     : false,
+                    allowOutsideClick  : false,
+                    showCancelButton   : true,
+                    confirmButtonColor : "#DD6B55",
+                    confirmButtonText  : "Yes",
+                    showLoaderOnConfirm: true,
+                    closeOnConfirm     : false,
+                    //en sweet alert para el submit es necesario el parametro preconfirm, sino no envia formulario, ya que tiene que ser async
+                    preConfirm:   function (isConfirm) {
+                    
+                        if (isConfirm) {
+                            //Aqui es donde hacemos el submit del formulario, cuando ya tenemos todo preparado
+                            document.formulario.submit();
+                            
+                            return true;
+                        }else{
+                            return false;
+                        }
+                
+                        
+                
+                    }
+                }
+            
+               
+            )    
 
 
    
 
+        
+      })
+      
+    
+   
      
 
 
